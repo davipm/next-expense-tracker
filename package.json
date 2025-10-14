@@ -1,27 +1,32 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "Payment tracker API",
-  "main": "index.js",
+  "name": "react-node-expense-tracker",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "start": "sucrase-node server.js",
-    "server": "nodemon --exec sucrase-node server.js",
-    "client": "npm start --prefix ../",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F server dev",
+    "db:push": "turbo -F @react-node-expense-tracker/db db:push",
+    "db:studio": "turbo -F @react-node-expense-tracker/db db:studio",
+    "db:generate": "turbo -F @react-node-expense-tracker/db db:generate",
+    "db:migrate": "turbo -F @react-node-expense-tracker/db db:migrate"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "colors": "^1.4.0",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.9.5",
-    "morgan": "^1.10.0"
+    "dotenv": "^17.2.2",
+    "prettier": "^3.6.2",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0",
-    "nodemon": "^2.0.2",
-    "sucrase": "^3.12.1"
-  }
+    "@types/node": "^22.13.11",
+    "tsdown": "^0.15.5",
+    "turbo": "^2.5.4"
+  },
+  "packageManager": "npm@11.6.1"
 }

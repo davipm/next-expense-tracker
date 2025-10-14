@@ -1,0 +1,8 @@
+model Transaction {
+  id       Int      @id @default(autoincrement())
+  text     String
+  amount   Float
+  createAt DateTime @default(now())
+
+  @@map("transaction")
+}

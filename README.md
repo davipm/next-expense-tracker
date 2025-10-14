@@ -4,8 +4,8 @@ A full stack project for financial control, bill payment control and payment rec
 
 ## Built With
 
-* react.js 
-* node.js 
+* react.js
+* node.js
 * styled-components
 
 ## Authors
