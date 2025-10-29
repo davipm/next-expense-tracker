@@ -1,82 +1,150 @@
-# Financial Control
+# 🧾 Expense Tracker Application
 
-A full stack project for financial control, bill payment control and payment receipts.
+A modern, full-stack expense tracking application built with a monorepo architecture using cutting-edge technologies.
 
-## Built With
+![Project Screenshot](#) <!-- You can add actual screenshots here -->
 
-* react.js
-* node.js
-* styled-components
+## 🚀 Tech Stack
 
-## Authors
+### Frontend
+- **[React 19](https://react.dev/)** - Latest React with hooks and concurrent features
+- **[Vite](https://vitejs.dev/)** - Ultra-fast build tool and development server
+- **[React Router v7](https://reactrouter.com/)** - Declarative routing for React
+- **[Tailwind CSS v4](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[TanStack Query](https://tanstack.com/query)** - Server state management
+- **[React Hook Form](https://react-hook-form.com/)** - Performant, flexible forms with easy validation
 
-* **Davi Pereiran**
+### Backend
+- **[Node.js](https://nodejs.org/)** - JavaScript runtime environment
+- **[Express.js v5](https://expressjs.com/)** - Fast, unopinionated web framework
+- **[oRPC](https://orpc.dev/)** - Type-safe API framework
+- **[Zod](https://zod.dev/)** - TypeScript-first schema declaration and validation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Database & ORM
+- **[Prisma](https://www.prisma.io/)** - Next-generation ORM
+- **[SQLite](https://www.sqlite.org/)** - Lightweight database engine
 
-## Available Scripts
+### Monorepo Tools
+- **[TurboRepo](https://turbo.build/)** - High-performance build system for JavaScript/TypeScript monorepos
+- **[npm Workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)** - Built-in monorepo support
 
-In the project directory, you can run:
+## 📁 Project Structure
 
-### `npm start`
+```
+├── 📁 apps/
+│   ├── 📁 server/          # Express.js backend with oRPC
+│   └── 📁 web/             # React frontend with Vite
+├── 📁 packages/
+│   ├── 📁 api/             # Shared API contracts and procedures
+│   └── 📁 db/              # Prisma database client and schema
+├── 📄 turbo.json           # Turborepo configuration
+├── 📄 package.json         # Root package.json with workspaces
+└── 📄 README.md            # This file
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🛠️ Prerequisites
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **Node.js** >= 18.x
+- **npm** >= 8.x
+- **Docker** (optional, for containerized deployment)
 
-### `npm test`
+## ▶️ Getting Started
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation
 
-### `npm run build`
+```bash
+# Clone the repository
+git clone <repository-url>
+cd react-context-node-payment
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Install dependencies
+npm install
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Database Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Generate Prisma client
+npm run db:generate
 
-### `npm run eject`
+# Push database schema
+npm run db:push
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Development
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Start both frontend and backend in development mode
+npm run dev
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Or start individual services
+npm run dev:server    # Start only the backend server
+npm run dev:web       # Start only the frontend application
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Your application will be available at:
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:3000
 
-## Learn More
+## 🐳 Docker Deployment
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Development with Docker
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+# Build and start all services
+docker-compose up --build
 
-### Code Splitting
+# Start services in detached mode
+docker-compose up -d
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+# Stop all services
+docker-compose down
+```
 
-### Analyzing the Bundle Size
+### Production Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```bash
+# Build and start production services
+docker-compose -f docker-compose.prod.yml up --build
+```
 
-### Making a Progressive Web App
+## 📦 Available Scripts
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+| Command | Description |
+|--------|-------------|
+| `npm run dev` | Start all services in development mode |
+| `npm run build` | Build all packages |
+| `npm run dev:server` | Start only the backend server |
+| `npm run dev:web` | Start only the frontend application |
+| `npm run db:generate` | Generate Prisma client |
+| `npm run db:push` | Push Prisma schema to database |
+| `npm run db:studio` | Open Prisma Studio |
 
-### Advanced Configuration
+## 🔧 Environment Variables
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Create a `.env` file in the root directory with the following variables:
 
-### Deployment
+```env
+# Database connection
+DATABASE_URL=file:./dev.db
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+# Server configuration
+PORT=3000
+CORS_ORIGIN=http://localhost:5173
+```
 
-### `npm run build` fails to minify
+## 🤝 Contributing
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Authors
+
+- Davi Pereira - Initial work

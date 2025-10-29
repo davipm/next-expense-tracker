@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Server API service
+  server:
+    build: .
+    container_name: expense_tracker_server
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - CORS_ORIGIN=http://localhost:5173
+      - PORT=3000
+    volumes:
+      - ./packages/db/prisma/dev.db:/app/packages/db/prisma/dev.db
+    command: npm run dev:server
+
+  # Web frontend service
+  web:
+    build: .
+    container_name: expense_tracker_web
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_SERVER_URL=http://server:3000
+    depends_on:
+      - server
+    command: npm run dev:web
