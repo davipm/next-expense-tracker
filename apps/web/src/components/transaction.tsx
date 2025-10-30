@@ -15,6 +15,30 @@ export function Transaction({ id, text, amount }: Props) {
 
   const { mutate: deleteTransaction, isPending } = useMutation(
     orpc.transaction.delete.mutationOptions({
+      onMutate: async () => {
+        await queryClient.cancelQueries({
+          queryKey: orpc.transaction.key({ type: "query" }),
+        });
+
+        const previousTransactions = queryClient.getQueriesData({
+          queryKey: orpc.transaction.key({ type: "query" }),
+        });
+
+        queryClient.setQueriesData(
+          { queryKey: orpc.transaction.key({ type: "query" }) },
+          (old: any) => {
+            return old.filter((transaction: any) => transaction.id !== id);
+          },
+        );
+
+        return { previousTransactions };
+      },
+      onError: (err, variables, context) => {
+        queryClient.setQueriesData(
+          { queryKey: orpc.transaction.key({ type: "query" }) },
+          context?.previousTransactions,
+        );
+      },
       onSuccess: async () => {
         await queryClient.invalidateQueries({
           queryKey: orpc.transaction.key({ type: "query" }),
