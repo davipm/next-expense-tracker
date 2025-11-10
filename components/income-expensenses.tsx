@@ -22,13 +22,13 @@ export function IncomeExpenses() {
   return (
     <div className="flex justify-between my-5 p-5 border rounded-md border-gray-500 shadow-md">
       <div className="flex-1 text-center first-of-type:border-r first-of-type:border-[#dedede]">
-        <h4>Income</h4>
+        <h4 className="font-mono">Income</h4>
         <p className="mb-1 text-2xl tracking-wide text-[#2ecc71]">
           ${numberWithCommas(String(income))}
         </p>
       </div>
       <div className="flex-1 text-center">
-        <h4>Expense</h4>
+        <h4 className="font-mono">Expense</h4>
         <p className="mb-1 text-2xl tracking-wide text-[#c0392b]">
           ${numberWithCommas(String(expense))}
         </p>

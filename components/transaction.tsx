@@ -28,8 +28,8 @@ export function Transaction({ id, text, amount }: Props) {
 
         queryClient.setQueriesData(
           { queryKey: orpc.transaction.key({ type: 'query' }) },
-          (old: any) => {
-            return old.filter((transaction: any) => transaction.id !== id);
+          (old: { id: number }[]) => {
+            return old.filter((transaction) => transaction.id !== id);
           },
         );
 
@@ -50,7 +50,7 @@ export function Transaction({ id, text, amount }: Props) {
   );
 
   return (
-    <li className="flex font-bold text-lg font-mono justify-between items-center relative my-2.5 p-2.5 text-[#333] bg-white shadow-md">
+    <li className="flex font-bold text-lg dark:bg-gray-900 dark:text-white rounded-md font-mono justify-between items-center relative my-2.5 p-2.5 text-[#333] bg-white shadow-md">
       {text}{' '}
       <span className="hover:cursor-pointer">
         {amount < 0 ? '-' : '+'}${numberWithCommas(String(Math.abs(amount)))}

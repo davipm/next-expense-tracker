@@ -23,7 +23,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "/home/davi/WebstormProjects/react-node-expense-tracker/prisma/generated/prisma",
+      "value": "/home/davi/WebstormProjects/next-expense-tracker/prisma/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -37,7 +37,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/davi/WebstormProjects/react-node-expense-tracker/prisma/schema.prisma",
+    "sourceFilePath": "/home/davi/WebstormProjects/next-expense-tracker/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../..",
