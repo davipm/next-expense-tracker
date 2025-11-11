@@ -74,12 +74,8 @@ npm run db:migrate
 npm run dev
 ```
 
-Your application will be available at:
+Application will be available at:
 - **Application**: http://localhost:3000
-
-Your application will be available at:
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:3000
 
 ## 🐳 Docker Deployment
 
@@ -131,18 +127,6 @@ Create a `.env` file in the root directory with the following variables:
 # Database connection
 DATABASE_URL=postgresql://postgres:password@localhost:5432/transaction-db?schema=public
 ```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Authors
 
