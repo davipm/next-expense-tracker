@@ -7,9 +7,6 @@ node_modules
 coverage
 .nyc_output
 
-# Dependency directories
-node_modules/
-
 # IDE and editor files
 .idea/
 .vscode/
@@ -20,12 +17,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# Log files
-*.log
-
 # Build outputs
 out/
-dist/
 
 # Local development files
 .env.local
