@@ -7,7 +7,7 @@ import { TransactionList } from '@/components/transaction-list';
 
 export default function Home() {
   return (
-    <div className="mx-auto w-[350px] flex flex-col justify-center">
+    <div className="mx-auto w-[350px] flex flex-col justify-center pb-5">
       <Balance />
       <IncomeExpenses />
       <TransactionList />
