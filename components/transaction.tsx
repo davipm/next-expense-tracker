@@ -38,10 +38,11 @@ export function Transaction({ id, text, amount }: Props) {
       },
       onError: (err, variables, context) => {
         toast.error(`${err.message} form Transaction ${variables.id}`);
-        queryClient.setQueriesData(
-          { queryKey: orpc.transaction.key({ type: 'query' }) },
-          context?.previousTransactions,
-        );
+        if (context?.previousTransactions) {
+          Object.entries(context.previousTransactions).forEach(([queryKey, data]) => {
+            queryClient.setQueryData([queryKey], data);
+          });
+        }
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries({
