@@ -1,23 +1,20 @@
-import { useMemo } from 'react';
 import { useTransactions } from '@/hooks/use-transactions';
 import { numberWithCommas } from '@/lib/utils';
 
 export function IncomeExpenses() {
   const { amounts } = useTransactions();
 
-  const { income, expense } = useMemo(() => {
-    return amounts.reduce(
-      (acc, amount) => {
-        if (amount > 0) {
-          acc.income += amount;
-        } else {
-          acc.expense += Math.abs(amount);
-        }
-        return acc;
-      },
-      { income: 0, expense: 0 },
-    );
-  }, [amounts]);
+  const { income, expense } = amounts.reduce(
+    (acc, amount) => {
+      if (amount > 0) {
+        acc.income += amount;
+      } else {
+        acc.expense += Math.abs(amount);
+      }
+      return acc;
+    },
+    { income: 0, expense: 0 },
+  );
 
   return (
     <div className="flex justify-between my-5 p-5 border rounded-md border-gray-500 shadow-md">
