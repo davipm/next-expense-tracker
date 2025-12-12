@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
-// import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
@@ -30,7 +29,7 @@ export function AddTransaction() {
     },
   });
 
-  const { mutate: createTransactionMutation } = useMutation(
+  const { mutate: createTransactionMutation, isPending } = useMutation(
     orpc.transaction.create.mutationOptions({
       onSuccess: async () => {
         form.reset();
@@ -95,7 +94,7 @@ export function AddTransaction() {
         <Button
           type="submit"
           className="text-base hover:cursor-pointer"
-          disabled={form.formState.isSubmitting || form.formState.isLoading}
+          disabled={form.formState.isSubmitting || form.formState.isLoading || isPending}
         >
           Add Transaction
         </Button>
