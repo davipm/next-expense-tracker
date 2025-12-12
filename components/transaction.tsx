@@ -28,11 +28,14 @@ export function Transaction({ id, text, amount }: Props) {
 
         return { previousTransactions };
       },
+      onSuccess: () => {
+        toast.success('Transaction deleted successfully');
+      },
       onError: (err, variables, context) => {
         toast.error(`${err.message} form Transaction ${variables.id}`);
         queryClient.setQueryData(orpc.transaction.list.queryKey(), context?.previousTransactions);
       },
-      onSuccess: async () => {
+      onSettled: async () => {
         await queryClient.invalidateQueries({
           queryKey: orpc.transaction.key({ type: 'query' }),
         });

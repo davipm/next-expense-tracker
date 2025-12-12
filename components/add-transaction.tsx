@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
@@ -31,8 +32,37 @@ export function AddTransaction() {
 
   const { mutate: createTransactionMutation, isPending } = useMutation(
     orpc.transaction.create.mutationOptions({
-      onSuccess: async () => {
+      onMutate: async (transaction) => {
+        await queryClient.cancelQueries({
+          queryKey: orpc.transaction.key(),
+        });
+
+        const previousTransaction = queryClient.getQueryData(orpc.transaction.list.queryKey());
+
+        queryClient.setQueryData(orpc.transaction.list.queryKey(), (old) => {
+          if (!old) return old;
+          return [
+            ...old,
+            {
+              ...transaction,
+              amount: Number(transaction.amount),
+              id: Math.random(),
+              createdAt: new Date(),
+            },
+          ];
+        });
+
+        return { previousTransaction };
+      },
+      onSuccess: () => {
         form.reset();
+        toast.success('Ticket created successfully');
+      },
+      onError: (err, variables, context) => {
+        toast.error(`${err.message} form Transaction ${variables.text}`);
+        queryClient.setQueryData(orpc.transaction.list.queryKey(), context?.previousTransaction);
+      },
+      onSettled: async () => {
         await queryClient.invalidateQueries({
           queryKey: orpc.transaction.key({ type: 'query' }),
         });
