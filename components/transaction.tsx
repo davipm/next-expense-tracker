@@ -4,45 +4,33 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { numberWithCommas } from '@/lib/utils';
+import type { Transaction as IProps } from '@/server/schemas/transaction.schema';
 import { orpc } from '@/utils/orpc';
 
-type Props = {
-  id: number;
-  text: string;
-  amount: number;
-  createAt?: Date;
-};
+type Props = Omit<IProps, 'createdAt'>;
 
 export function Transaction({ id, text, amount }: Props) {
   const queryClient = useQueryClient();
 
   const { mutate: deleteTransaction, isPending } = useMutation(
     orpc.transaction.delete.mutationOptions({
-      onMutate: async () => {
+      onMutate: async ({ id }) => {
         await queryClient.cancelQueries({
-          queryKey: orpc.transaction.key({ type: 'query' }),
+          queryKey: orpc.transaction.key(),
         });
 
-        const previousTransactions = queryClient.getQueriesData({
-          queryKey: orpc.transaction.key({ type: 'query' }),
-        });
+        const previousTransactions = queryClient.getQueryData(orpc.transaction.list.queryKey());
 
-        queryClient.setQueriesData(
-          { queryKey: orpc.transaction.key({ type: 'query' }) },
-          (old: { id: number }[]) => {
-            return old.filter((transaction) => transaction.id !== id);
-          },
-        );
+        queryClient.setQueryData(orpc.transaction.list.queryKey(), (old) => {
+          if (!old) return old;
+          return old.filter((transaction) => transaction.id !== id);
+        });
 
         return { previousTransactions };
       },
       onError: (err, variables, context) => {
         toast.error(`${err.message} form Transaction ${variables.id}`);
-        if (context?.previousTransactions) {
-          Object.entries(context.previousTransactions).forEach(([queryKey, data]) => {
-            queryClient.setQueryData([queryKey], data);
-          });
-        }
+        queryClient.setQueryData(orpc.transaction.list.queryKey(), context?.previousTransactions);
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries({
