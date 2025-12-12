@@ -2,31 +2,28 @@ import { ORPCError } from '@orpc/server';
 import z from 'zod';
 import { publicProcedure } from '@/server/orpc';
 import { prisma } from '@/server/prisma';
-
-export const transactionSchema = z.object({
-  id: z.number().min(1),
-  text: z.string().min(1),
-  amount: z.number().min(1),
-  createAt: z.date(),
-});
+import {
+  TransactionRequestSchema,
+  TransactionResponseSchema,
+} from '@/server/schemas/transaction.schema';
 
 export const transactionRouter = {
-  getAll: publicProcedure
+  list: publicProcedure
     .route({ method: 'GET', path: '/transactions' })
-    .output(z.array(transactionSchema))
+    .output(z.array(TransactionResponseSchema))
     .handler(() => {
       return prisma.transaction.findMany();
     }),
 
   create: publicProcedure
     .route({ method: 'POST', path: '/transactions' })
-    .input(transactionSchema.omit({ id: true, createAt: true }))
-    .output(transactionSchema)
+    .input(TransactionRequestSchema)
+    .output(TransactionResponseSchema)
     .handler(({ input }) => {
       return prisma.transaction.create({
         data: {
           text: input.text,
-          amount: input.amount,
+          amount: Number(input.amount),
         },
       });
     }),
@@ -34,7 +31,7 @@ export const transactionRouter = {
   delete: publicProcedure
     .route({ method: 'DELETE', path: '/transactions/{id}' })
     .input(z.object({ id: z.number() }))
-    .output(transactionSchema)
+    .output(TransactionResponseSchema)
     .handler(async ({ input }) => {
       const transaction = await prisma.transaction.findUnique({
         where: { id: input.id },

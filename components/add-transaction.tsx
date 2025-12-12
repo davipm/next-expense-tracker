@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
-import * as z from 'zod';
+// import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
@@ -13,18 +13,17 @@ import {
   InputGroupInput,
   InputGroupText,
 } from '@/components/ui/input-group';
+import {
+  type TransactionRequest,
+  TransactionRequestSchema,
+} from '@/server/schemas/transaction.schema';
 import { orpc } from '@/utils/orpc';
-
-export const transactionSchema = z.object({
-  text: z.string().min(1, 'Please add some item').trim(),
-  amount: z.string().min(1, 'Please add some value').trim(),
-});
 
 export function AddTransaction() {
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof transactionSchema>>({
-    resolver: zodResolver(transactionSchema),
+  const form = useForm<TransactionRequest>({
+    resolver: zodResolver(TransactionRequestSchema),
     defaultValues: {
       text: '',
       amount: '',
@@ -42,8 +41,8 @@ export function AddTransaction() {
     }),
   );
 
-  const onSubmit: SubmitHandler<z.infer<typeof transactionSchema>> = (data) => {
-    createTransactionMutation({ ...data, amount: Number(data.amount) });
+  const onSubmit: SubmitHandler<TransactionRequest> = (data) => {
+    createTransactionMutation(data);
   };
 
   return (
