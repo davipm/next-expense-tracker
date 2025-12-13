@@ -1,3 +1,5 @@
+'use client';
+
 import { Transaction } from '@/components/transaction';
 import { useTransactions } from '@/hooks/use-transactions';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { useTransactions } from '@/hooks/use-transactions';
 import { numberWithCommas } from '@/lib/utils';
 

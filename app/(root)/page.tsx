@@ -1,5 +1,3 @@
-'use client';
-
 import { AddTransaction } from '@/components/add-transaction';
 import { Balance } from '@/components/balance';
 import { IncomeExpenses } from '@/components/income-expensenses';
