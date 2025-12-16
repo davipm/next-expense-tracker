@@ -8,11 +8,7 @@ export function IncomeExpenses() {
 
   const { income, expense } = amounts.reduce(
     (acc, amount) => {
-      if (amount > 0) {
-        acc.income += amount;
-      } else {
-        acc.expense += Math.abs(amount);
-      }
+      acc[amount > 0 ? 'income' : 'expense'] += Math.abs(amount);
       return acc;
     },
     { income: 0, expense: 0 },
