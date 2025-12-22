@@ -13,11 +13,11 @@ import {
   InputGroupInput,
   InputGroupText,
 } from '@/components/ui/input-group';
+import { orpc } from '@/lib/orpc';
 import {
   type TransactionRequest,
   TransactionRequestSchema,
 } from '@/server/schemas/transaction.schema';
-import { orpc } from '@/utils/orpc';
 
 export function AddTransaction() {
   const queryClient = useQueryClient();

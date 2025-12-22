@@ -3,9 +3,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { orpc } from '@/lib/orpc';
 import { numberWithCommas } from '@/lib/utils';
 import type { Transaction as IProps } from '@/server/schemas/transaction.schema';
-import { orpc } from '@/utils/orpc';
 
 type Props = Omit<IProps, 'createdAt'>;
 
